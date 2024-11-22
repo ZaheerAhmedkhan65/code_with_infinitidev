@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  
+  <div class="card border-0">
+    <div class="card-title text-center my-3 bg-secondary-subtle p-3">
+      <h1 class="text-center text-uppercase">Admin Dashboard</h1>
+    </div>
+    <div class="card-body">
+      <div class="d-lg-flex align-items-center gap-3">
+        <%= link_to 'View Students', users_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+    <h2 class="my-3">STUDENTS</h2>
+    <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+            <td><%= user.role %></td>
+            <td>
+              <%= link_to "View", user_path(user), class: "btn btn-info" %>
+            </td> 
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  </div>
+  
+  
+
+    
+</div>

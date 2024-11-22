@@ -1,0 +1,36 @@
+<div class="container mt-4">
+<div class="card border-0">
+  <div class="card-title text-center my-3 bg-secondary-subtle py-3">
+  <h1 class="text-uppercase">User Profile</h1>
+  </div>
+    <div class="card-body">
+      <div class="d-lg-flex justify-content-between">
+        <div>
+          <p class="fs-2"><strong><%= @user.username %></strong></p>
+          <p class=""><strong>Role : </strong> <%= @user.role %></p>
+          <p class=""><strong>Email : </strong> <%= @user.email %></p>
+          <h2>Courses</h2>
+          <% @user.courses.each do |course| %>
+             <h3><%= course.title %></h3>
+             <h4>Assignments</h4>
+             <% course.assignments.each do |assignment| %>
+               <p><%= link_to assignment.title, course_assignment_path(course, assignment) , class:'text-decoration-none' %></p>
+             <% end %>
+          <% end %>
+        </div>
+        <div class="text-center">
+           <%= image_tag @user.avatar , width: 300  , height: 300, class: "rounded-circle" %>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start gap-3">
+        <% if current_user.admin?%>
+        <%= link_to 'Go Back', users_path, class: 'btn btn-outline-secondary rounded-0 fw-bold' %>
+        <% else %>
+        <%= link_to 'Go Back', root_path, class: 'btn btn-outline-secondary rounded-0 fw-bold' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+

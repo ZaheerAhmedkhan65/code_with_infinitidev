@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <div class="card border-0">
+    <div class="card-title text-center my-3 bg-secondary-subtle py-3">
+      <h1 class="text-uppercase">Edit <%= @user.name %>'s Profile</h1>
+    </div>
+  <div class="card-body">
+  <%= form_with(model: @user, local: true) do |form| %>
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger" role="alert">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :username, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= form.label :avatar , "Photo" , class: 'form-label' %>
+      <%= form.file_field :avatar, class: "form-control"%>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :email, class: 'form-label' %>
+      <%= form.email_field :email, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :role, class: 'form-label' %>
+      <%= form.select :role, User.roles.keys.map { |role| [role.humanize, role] }, { include_blank: true }, class: 'form-select' %>
+    </div>
+
+    <div class="d-flex justify-content-start gap-3">
+      <%= form.submit 'Save Changes', class: 'btn btn-success rounded-0 fw-bold' %>
+      <%= link_to 'Back', users_path, class: 'btn btn-outline-secondary rounded-0 fw-bold' %>
+    </div>
+  <% end %>
+  </div>
+  </div>
+</div>

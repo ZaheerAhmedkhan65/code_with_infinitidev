@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="card border-0">
+    <div class="card-title text-center my-3 bg-secondary-subtle py-3">
+      <h1>Courses</h1>
+    </div>
+    <div class="card-body">
+      <% @courses.each do |course| %>
+        <h2><%= link_to course.title, course_path(course) , class:'text-decoration-none fs-1 fw-bold text-secondary' %></h2>
+        <p><%= course.description %></p>
+        <% if course.user == current_user %>
+          <span class="badge bg-success">Already Joined</span>
+        <% else %>
+          <%= button_to "Join Course", join_course_path(course), method: :post, class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+      <%= link_to 'New Course', new_course_path if current_user.admin? %>
+    </div>
+  </div>
+</div>

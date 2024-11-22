@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+lesson_one:
+  id: 1
+  title: "Introduction to HTML"
+  content: "Learn the basics of HTML."
+  lesson_date: 2024-11-25 10:00:00
+  course_id: 1
+
+lesson_two:
+  id: 2
+  title: "Active Record Basics"
+  content: "Introduction to Rails' ORM."
+  lesson_date: 2024-11-26 11:00:00
+  course_id: 2

@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="card border-0">
+    <div class="card-title text-center my-3 bg-secondary-subtle py-3">
+      <h1><%= @course.title %></h1>
+    </div>
+    <div class="card-body">
+      <p><%= @course.description %></p>
+      <h2>Lessons</h2>
+      <% @lessons.each do |lesson| %>
+        <h3><%= link_to lesson.title, course_lesson_path(@course, lesson) , class:'text-decoration-none fs-1 fw-bold text-secondary' %></h3>
+      <% end %>
+
+      <h2>Assignments</h2>
+      <% @assignments.each do |assignment| %>
+        <h3><%= link_to assignment.title, course_assignment_path(@course, assignment) , class:'text-decoration-none fs-1 fw-bold text-secondary' %></h3>
+      <% end %>
+      <%= link_to 'New Assignment', new_course_assignment_path(@course) if current_user.admin? %>
+      <%= link_to "New Lesson", new_course_lesson_path(@course) if current_user.admin? %>
+    </div>
+  </div>
+</div>

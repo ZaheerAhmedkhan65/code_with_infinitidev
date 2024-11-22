@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+course_one:
+  id: 1
+  title: "Web Development Basics"
+  description: "A foundational course in web development."
+  fee: 199.99
+  user_id: 1
+
+course_two:
+  id: 2
+  title: "Advanced Ruby on Rails"
+  description: "Master advanced features of Rails."
+  fee: 299.99
+  user_id: 2

@@ -1,0 +1,43 @@
+.bg-space-image {
+    background-image: url('background_in_space.png');
+    background-position: center center;
+  }
+.content-wrapper{
+    width: 100%;
+    overflow-x: hidden;
+}
+.example-wrapper{
+    margin: 10px 0px;
+    padding: 10px;
+    border-left: 5px solid rgb(212, 212, 56);
+}
+.exampleBox{
+    margin: 0px 25px;
+    background-color:#2066b7;;
+    color: white;
+    border-radius: 10px;
+
+}   
+.exampleBox b{
+ padding: 10px 4px;
+}
+.example{
+    background-color: #333;
+    margin: 10px 5px;
+}
+.brown{
+    color:rgb(252, 155, 171);
+}
+.purple{
+ color: rgb(179, 133, 179);
+}
+.green{
+    color: rgb(159, 245, 159);
+}
+.yellow{
+    color: rgb(244, 244, 161);
+}
+.content-wrapper{
+    width: 100%;
+    overflow-x: hidden;
+}

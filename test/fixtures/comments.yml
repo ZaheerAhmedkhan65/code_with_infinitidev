@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+comment_one:
+  id: 1
+  content: "This is a great assignment!"
+  user_id: 1
+  commentable_type: "Assignment"
+  commentable_id: 1
+
+comment_two:
+  id: 2
+  content: "Looking forward to learning this."
+  user_id: 2
+  commentable_type: "Lesson"
+  commentable_id: 1

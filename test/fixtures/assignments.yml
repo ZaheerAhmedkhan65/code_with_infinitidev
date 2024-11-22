@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+
+assignment_one:
+  id: 1
+  title: "Intro to Rails"
+  description: "Learn the basics of Rails framework."
+  due_date: 2024-12-01 10:00:00
+  user_id: 1
+  course_id: 1
+
+
+assignment_two:
+  id: 2
+  title: "Active Record Associations"
+  description: "Implement associations in Rails models."
+  due_date: 2024-12-08 10:00:00
+  user_id: 2
+  course_id: 2

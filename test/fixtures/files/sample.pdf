@@ -1,0 +1,6 @@
+one:
+  title: "Assignment 1"
+  description: "Complete this assignment to learn Rails."
+  course: one
+  user: admin
+  file: <%= Rails.root.join('test/fixtures/files/sample.pdf') %>

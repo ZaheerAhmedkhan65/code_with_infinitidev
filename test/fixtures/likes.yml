@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+like_one:
+  id: 1
+  user_id: 1
+  like_type: 1
+  likeable_type: "Assignment"
+  likeable_id: 1
+
+like_two:
+  id: 2
+  user_id: 2
+  like_type: 1
+  likeable_type: "Lesson"
+  likeable_id: 2

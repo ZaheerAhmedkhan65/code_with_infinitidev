@@ -1,0 +1,93 @@
+<div class="container mt-4">
+  <div class="card border-0">
+    <div class="card-title text-center my-3 bg-secondary-subtle p-3">
+      <h1 class="text-center text-uppercase"><%= @lesson.title %></h1>
+    </div>
+    <div class="card-body">
+      <p class="lead"><%= @lesson.content %></p>
+      <h3 class="mt-4 mb-3">Comments</h3>
+      <div class="border py-3 px-3">
+      <% @comments.each do |comment| %>
+        <div class="comment-container mb-2 d-flex align-items-start <%= comment.user == current_user ? 'justify-content-end' : 'justify-content-start' %>">
+          <% if comment.user == current_user %>
+            <div class="comment-box bg-primary-subtle p-3 rounded position-relative order-1">
+              <div class="action-buttons d-none position-absolute top-50 start-10 translate-middle">
+                <%= link_to edit_course_lesson_comment_path(@lesson.course, @lesson, comment), class: 'btn btn-warning btn-sm' do %>
+                  <i class="fa-solid fa-pen"></i>
+                <% end %>
+                <%= button_to course_lesson_comment_path(@lesson.course, @lesson, comment), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm mt-2' do %>
+                  <i class="fa-solid fa-trash"></i>
+                <% end %>
+              </div>
+              <strong><%= comment.user.username %></strong>
+              <p class="mb-0 text-start"><%= comment.content %></p>
+            </div>
+            <span class="ms-2 order-2"><%= image_tag comment.user.avatar, width: 50, height: 50, class: "rounded-circle border bg-primary-subtle" %></span>
+          <% else %>
+            <span class="me-2 order-1"><%= image_tag comment.user.avatar, width: 50, height: 50, class: "rounded-circle border bg-secondary-subtle" %></span>
+            <div class="comment-box bg-secondary-subtle p-3 rounded position-relative order-2">
+              <strong><%= comment.user.username %></strong>
+              <p class="mb-0 text-start"><%= comment.content %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      </div>
+
+      <%= form_with(model: [@lesson.course, @lesson, @comment], local: true) do |form| %>
+        <div class="d-flex align-items-center">
+          <div class="form-group w-100">
+            <%= form.text_area :content, placeholder: "Add a comment...", rows: 1, class: "form-control" %>
+          </div>
+          <div>
+          <%= form.button type: "submit", class: "btn btn-primary" do %>
+            <i class="fa-solid fa-paper-plane rotate-30"></i>
+          <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+.comment-box {
+  max-width: 60%;
+  position: relative;
+}
+.rotate-30{
+    translate:rotate(-30deg)
+}
+.comment-container:hover .action-buttons {
+  display: inline-flex !important;
+}
+
+.action-buttons {
+  display: none; /* Hidden by default */
+}
+
+.comment-container.justify-content-end .comment-box {
+  text-align: right;
+  background-color: #f0f8ff; /* Light blue for current user's comments */
+}
+
+.comment-container.justify-content-start .comment-box {
+  text-align: left;
+  background-color: #f8f9fa; /* Light gray for other users' comments */
+}
+
+/* Position action buttons on the left side */
+.action-buttons {
+  display: none;
+  flex-direction: column; /* Stack the buttons vertically */
+}
+
+.comment-container.justify-content-end .action-buttons {
+  left: -50px; /* Adjust as necessary to position the buttons outside the comment box */
+}
+
+.comment-container.justify-content-start .action-buttons {
+  left: -50px; /* Adjust as necessary to position the buttons outside the comment box */
+}
+
+</style>
