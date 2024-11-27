@@ -19,7 +19,14 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to course_lesson_path(@commentable.course, @commentable), notice: "Comment updated successfully."
+      # Redirect to the appropriate path based on the type of commentable
+      if @commentable.is_a?(Lesson)
+        redirect_to course_lesson_path(@commentable.course, @commentable), notice: "Comment updated successfully."
+      elsif @commentable.is_a?(Assignment)
+        redirect_to course_assignment_path(@commentable.course, @commentable), notice: "Comment updated successfully."
+      else
+        redirect_to root_path, alert: "Unknown commentable type."
+      end
     else
       render :edit
     end

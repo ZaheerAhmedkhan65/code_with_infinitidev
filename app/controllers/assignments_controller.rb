@@ -1,11 +1,11 @@
 class AssignmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_course
-  before_action :set_assignment, only: [ :show ]
-  before_action :authorize_admin!, only: [ :new, :create ]
+  before_action :set_assignment, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_admin!, only: [ :index, :new, :create ]
 
   def index
-    @assignments = @course.assignments
+    @assignments =  Assignment.all
   end
 
   def show
@@ -31,6 +31,22 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @assignment.update(assignment_params)
+      redirect_to course_assignment_path(@course, @assignment), notice: "Assignment updated successfully."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @assignment.destroy
+    redirect_to course_assignments_path(@course), notice: "Assignment deleted successfully."
+  end
+
  private
 
   def authorize_admin!
@@ -48,6 +64,6 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:title, :description, :due_date, :file)
+    params.require(:assignment).permit(:title, :description, :due_date, :file, :image)
   end
 end

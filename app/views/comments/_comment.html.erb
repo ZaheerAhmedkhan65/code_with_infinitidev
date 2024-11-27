@@ -1,0 +1,100 @@
+<% comments.each do |comment| %>
+<%= turbo_frame_tag dom_id(comment) do %>
+<div class="comment-container mb-2 d-flex align-items-start <%= comment.user == current_user ? 'justify-content-end' : 'justify-content-start' %>">
+  <% if comment.user == current_user %>
+    <div class="comment-box bg-primary-subtle p-3 rounded position-relative order-1">
+      <div class="action-buttons d-none position-absolute top-50 start-25 translate-middle">
+        <% if commentable.is_a?(Lesson) %>
+            <%= link_to edit_course_lesson_comment_path(commentable.course, commentable, comment), class: 'btn btn-warning btn-sm' do %>
+              <i class="fa-solid fa-pen"></i>
+            <% end %>
+            <%= button_to course_lesson_comment_path(commentable.course, commentable, comment), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm mt-2' do %>
+              <i class="fa-solid fa-trash"></i>
+            <% end %>
+        <% elsif commentable.is_a?(Assignment) %>
+            <%= link_to edit_course_assignment_comment_path(commentable.course, commentable, comment), class: 'btn btn-warning btn-sm rounded-pill' do %>
+              <i class="fa-solid fa-pen"></i>
+            <% end %>
+            <%= button_to course_assignment_comment_path(commentable.course, commentable, comment), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm mt-2 rounded-pill' do %>
+               <i class="fa-solid fa-trash"></i>
+            <% end %>
+        <% end %>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+          <strong>
+            <%= comment.user.username %>
+          </strong>
+          <span class="text-muted" style="font-size: 0.875rem;">
+            <%= time_ago_in_words(comment.created_at) %> ago
+          </span>
+      </div>
+      <p class="mb-0 text-start"><%= comment.content %></p>
+    </div>
+    <% if comment.user.avatar.attached? %>
+      <span class="ms-2 order-2"><%= image_tag comment.user.avatar, width: 50, height: 50, class: "rounded-circle border bg-primary-subtle" %></span>
+    <% end %>
+  <% else %>
+    <% if comment.user.avatar.attached? %>
+      <span class="me-2 order-1"><%= image_tag comment.user.avatar, width: 50, height: 50, class: "rounded-circle border bg-secondary-subtle" %></span>
+    <% end %>
+    <div class="comment-box bg-secondary-subtle p-3 rounded position-relative order-2">
+      <div class="d-flex align-items-center gap-2">
+          <strong>
+            <%= comment.user.username %>
+          </strong>
+          <span class="text-muted" style="font-size: 0.875rem;">
+            <%= time_ago_in_words(comment.created_at) %> ago
+          </span>
+      </div>
+      <p class="mb-0 text-start"><%= comment.content %></p>
+    </div>
+  <% end %>
+</div>
+<% end %>
+<% end %>
+
+
+<style>
+.comment-box {
+  max-width: 60%;
+  position: relative;
+}
+.rotate-30{
+    translate:rotate(-30deg)
+}
+.comment-container:hover .action-buttons {
+  display: inline-flex !important;
+}
+
+.action-buttons {
+  display: none; /* Hidden by default */
+}
+.start-25{
+  left:-25px !important;
+}
+
+.comment-container.justify-content-end .comment-box {
+  text-align: right;
+  background-color: #f0f8ff; /* Light blue for current user's comments */
+}
+
+.comment-container.justify-content-start .comment-box {
+  text-align: left;
+  background-color: #f8f9fa; /* Light gray for other users' comments */
+}
+
+/* Position action buttons on the left side */
+.action-buttons {
+  display: none;
+  flex-direction: column; /* Stack the buttons vertically */
+}
+
+.comment-container.justify-content-end .action-buttons {
+  left: -50px; /* Adjust as necessary to position the buttons outside the comment box */
+}
+
+.comment-container.justify-content-start .action-buttons {
+  left: -50px; /* Adjust as necessary to position the buttons outside the comment box */
+}
+
+</style>

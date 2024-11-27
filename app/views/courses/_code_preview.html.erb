@@ -1,0 +1,14 @@
+<% if @course.code_language == 'HTML' %>
+  <iframe style="width: 100%; height: 300px; border: 1px solid #ddd;" 
+    srcdoc="<%= @course.example_code.html_safe %>"></iframe>
+<% elsif @course.code_language == 'CSS' %>
+  <style>
+    <%= @course.example_code.html_safe %>
+  </style>
+  <p>CSS styles applied above.</p>
+<% elsif @course.code_language == 'JS' %>
+  <script>
+    <%= @course.example_code.html_safe %>
+  </script>
+  <p>JavaScript executed above.</p>
+<% end %>

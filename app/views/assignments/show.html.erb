@@ -4,100 +4,48 @@
       <h1 class="text-center text-uppercase"><%= @assignment.title %></h1>
     </div>
     <div class="card-body">
-      <p class="lead"><%= @assignment.description %></p>
-      <% if @assignment.file.attached? %>
-        <p><%= link_to 'Download File', rails_blob_path(@assignment.file, disposition: "attachment") %></p>
-      <% end %>
-
-      <h2>Likes</h2>
-
-      <%= button_to course_assignment_likes_path(@course, @assignment, like_type: 1, likeable_type: "Assignment"), method: :post, class: "btn btn-primary" do %>
-          <i class="fa-solid fa-thumbs-up"></i>
-          <span><%= @like_count %></span>
-      <% end %>
-
-      <%= button_to course_assignment_likes_path(@course, @assignment, like_type: 2, likeable_type: "Assignment"), method: :post, class: "btn btn-danger" do %>
-       <i class="fa-solid fa-thumbs-down"></i>
-       <span><%= @dislike_count %></span>
-      <% end %>
-
-      <h3 class="mt-4 mb-3">Comments</h3>
-      <div class="border py-3 px-3">
-        <% @comments.each do |comment| %>
-          <div class="comment-container mb-2 d-flex align-items-start <%= comment.user == current_user ? 'justify-content-end' : 'justify-content-start' %>">
-            <% if comment.user == current_user%>
-              <div class="comment-box bg-primary-subtle p-3 rounded position-relative order-1">
-                <div class="action-buttons d-none position-absolute top-50 start-10 translate-middle">
-                  <%= button_to course_assignment_comment_path(@assignment.course, @assignment, comment), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm mt-2' do %>
-                    <i class="fa-solid fa-trash"></i>
-                  <% end %>
-                </div>
-                <strong><%= comment.user.username %></strong>
-                <p class="mb-0 text-start"><%= comment.content %></p>
-              </div>
-              <% if comment.user.avatar.attached? %>
-                <span class="ms-2 order-2"><%= image_tag comment.user.avatar, width: 50, height: 50, class: "rounded-circle border bg-primary-subtle" %></span>
-              <% end %>
-            <% else %>
-              <% if comment.user.avatar.attached? %>
-                <span class="me-2 order-1"><%= image_tag comment.user.avatar, width: 50, height: 50, class: "rounded-circle border bg-secondary-subtle" %></span>
-              <% end %>
-              <div class="comment-box bg-secondary-subtle p-3 rounded position-relative order-2">
-                <strong><%= comment.user.username %></strong>
-                <p class="mb-0 text-start"><%= comment.content %></p>
-              </div>
-            <% end %>
+      <div class="d-lg-flex justify-content-between">
+        <div class="w-100">
+          <div class="lead">
+            <span class="fw-bold"> Due Date : </span>
+            <%= @assignment.due_date.to_date %>
+            <small class="text-danger">(<%= distance_of_time_in_words(Time.current, @assignment.due_date) %> remaining)</small>
           </div>
-        <% end %>
+          <div class="lead">
+            <span class="fw-bold"> Dscription : </span>
+              <%= @assignment.description.html_safe %> 
+            </div>
+            <% if @assignment.file.attached? %>
+              <p><%= link_to 'Download File', rails_blob_path(@assignment.file, disposition: "attachment") %></p>
+            <% end %>
+        </div>
+        <div class="w-100">
+          <% if @assignment.image.attached?%>
+            <%= image_tag rails_blob_path(@assignment.image, alt: 'image'), class: 'bg-primary-subtle', width:"100%" %>
+          <% end %>
+        </div>
       </div>
 
-      <%= form_with(model: [@assignment.course, @assignment, @comment], local: true) do |form| %>
-        <div class="d-flex align-items-center">
-          <div class="form-group w-100">
-            <%= form.text_area :content, placeholder: "Add a comment...", rows: 1, class: "form-control" %>
-          </div>
-          <%= form.button type: "submit", class: "btn btn-primary" do %>
-            <i class="fa-solid fa-paper-plane rotate-30"></i>
+        <hr>
+       <div class="d-flex align-items-center justify-content-between">
+        <h3 class=fs-4"> <i class="fa-regular fa-comment"></i> <%= @comments.count %> Comments</h3>
+        <div class="d-flex align-items-center bg-primary rounded-pill">
+          <%= button_to course_assignment_likes_path(@course, @assignment, like_type: 1, likeable_type: "Assignment"), method: :post, class: "btn text-white fs-4" do %>
+              <i class="fa-solid fa-thumbs-up"></i>
+              <span><%= @like_count %></span>
           <% end %>
-        </div>      
-      <% end %>
+          <span class="fs-4 text-white"> | </span>
+          <%= button_to course_assignment_likes_path(@course, @assignment, like_type: 2, likeable_type: "Assignment"), method: :post, class: "btn text-white fs-4" do %>
+            <i class="fa-solid fa-thumbs-down"></i>
+            <span><%= @dislike_count %></span>
+          <% end %>
+        </div>
+      </div>
+      <%= render 'comments/form' ,commentable: @assignment %>
+      <div class="py-3 px-3">
+        <%= render 'comments/comment', comments: @comments, commentable: @assignment %>
+      </div>
+      
     </div>
   </div>
 </div>
-
-<style>
-.comment-box {
-  max-width: 60%;
-  position: relative;
-}
-.rotate-30 {
-  transform: rotate(-30deg); /* Corrected */
-}
-.comment-container:hover .action-buttons {
-  display: inline-flex !important;
-}
-
-.action-buttons {
-  display: none;
-  position: absolute;
-  z-index: 100;
-}
-
-.comment-container.justify-content-end .comment-box {
-  text-align: right;
-  background-color: #f0f8ff; /* Light blue */
-  margin-left: 20px;
-}
-
-.comment-container.justify-content-start .comment-box {
-  text-align: left;
-  background-color: #f8f9fa; /* Light gray */
-  margin-right: 20px;
-}
-
-@media (min-width: 768px) {
-  .comment-box {
-    max-width: 60%;
-  }
-}
-</style>

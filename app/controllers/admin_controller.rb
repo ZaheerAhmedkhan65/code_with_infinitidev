@@ -4,6 +4,9 @@ class AdminController < ApplicationController
 
   def dashboard
     @users = User.all
+    @courses = Course.all
+    @lessons = Lesson.all
+    @code_snippet = CodeSnippet.first
   end
 
   def index

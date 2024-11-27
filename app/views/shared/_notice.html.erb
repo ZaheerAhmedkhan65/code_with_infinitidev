@@ -1,13 +1,13 @@
-<div class="position-relative">
+<div class="position-relative ">
   <% if notice %>
-    <div id="flash-notice" class="alert alert-success position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-between" role="alert">
+    <div id="flash-notice" class="alert alert-success position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-between z-1" role="alert">
       <span><%= notice %></span>
       <button type="button" class="btn-close ms-2" aria-label="Close" onclick="hideNotification('flash-notice')"></button>
     </div>
   <% end %>
 
   <% if alert %>
-    <div id="flash-alert" class="alert alert-danger position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-between" role="alert">
+    <div id="flash-alert" class="alert alert-danger position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-between z-1" role="alert">
       <span><%= alert %></span>
       <button type="button" class="btn-close ms-2" aria-label="Close" onclick="hideNotification('flash-alert')"></button>
     </div>

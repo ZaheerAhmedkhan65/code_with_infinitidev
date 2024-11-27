@@ -1,7 +1,7 @@
 class LessonsController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, only: [ :new, :create, :edit, :update ]
     before_action :set_course
-    before_action :set_lesson, only: [ :show ]
+    before_action :set_lesson, only: [ :show, :edit, :update ]
     before_action :check_admin, only: [ :new ]
 
     def show
@@ -19,6 +19,20 @@ class LessonsController < ApplicationController
         redirect_to course_lesson_path(@course, @lesson), notice: "Lesson created successfully."
       else
         render :new
+      end
+    end
+
+    def edit
+        @course = Course.find(params[:course_id])
+        @lesson = @course.lessons.find(params[:id])
+        render :edit
+    end
+
+    def update
+      if @lesson.update(lesson_params)
+        redirect_to course_lesson_path(@course, @lesson), notice: "Lesson updated successfully."
+      else
+        render :edit
       end
     end
 

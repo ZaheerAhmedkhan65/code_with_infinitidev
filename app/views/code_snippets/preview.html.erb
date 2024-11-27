@@ -1,0 +1,121 @@
+<div class="mx-5">
+  <div class="col-lg-12 d-lg-flex align-items-center bg-secondary-subtle p-1">
+    <div class="mb-1 d-flex align-items-center justify-content-between w-100 pt-1">
+      <div>
+        <!-- Associate the label with the textarea -->
+        <%= label_tag "code-input", "Write HTML, CSS, or JavaScript", class: "mx-3" %>
+        <%= link_to "Home", root_path, class: 'btn btn-secondary fw-bold' %>
+        <i class="btn btn-secondary fw-bold" id="change_orientation">Change Orientation</i>
+      </div>
+      <%= button_tag "Run Code", type: "submit", class: "btn btn-primary mx-3 fw-bold", id: "submit-button", form: "code-form" %>
+    </div>
+    <div class="w-100" id="preview">
+      <h2 class="mx-3">Preview</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6" id="editor_box">
+      <%= form_with model: @code_snippet, local: false, id: "code-form" do |f| %>
+        <!-- Make sure the id matches the label's 'for' attribute -->
+        <%= f.text_area :code, class: 'border-none outline-none', id: "code-input", style: "width: 100%; height: 835px; border: 1px solid #ccc;" %>
+      <% end %>
+    </div>
+    <div class="col-lg-6" id="preview_box">
+      <iframe id="preview-frame" style="width: 100%; height: 835px; border: 1px solid #ccc;" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize CodeMirror with the correct mode for HTML, CSS, and JavaScript
+    const editor = CodeMirror.fromTextArea(document.getElementById('code-input'), {
+      lineNumbers: true,
+      mode: "javascript", // Mode for HTML, CSS, and JavaScript
+      theme: "custom_codemirror_theme", // You can change the theme
+      lineWrapping: true, // Wrap lines
+      matchBrackets: true, // Highlight matching brackets
+      autoCloseBrackets: true, // Automatically close brackets
+      foldGutter: true, // Enable fold gutter
+      gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"], // Enable folding
+      extraKeys: { 
+        "Ctrl-Space": "autocomplete", 
+        "Ctrl-Q": function(cm) { cm.foldCode(cm.getCursor()); }  // Fold code with Ctrl+Q
+      }
+    });
+
+    // Set the height of the editor (since CodeMirror doesn't use inline styles)
+    editor.getWrapperElement().style.height = "835px";  // Directly apply height style
+
+    // Get the iframe and content document for previewing code
+    const iframe = document.getElementById('preview-frame');
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Function to update iframe content
+    const updatePreview = () => {
+      const userCode = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <title>Code Preview</title>
+        </head>
+        <body>
+          ${editor.getValue()}
+        </body>
+        </html>
+      `;
+      doc.open();
+      doc.write(userCode);
+      doc.close();
+    };
+
+    // Event listener for updating preview when the code changes in the editor
+    // editor.on('change', updatePreview);
+
+    // Initial Preview: Call once when the page loads
+    updatePreview();
+
+      const editorBox = document.getElementById("editor_box");
+  const previewBox = document.getElementById("preview_box");
+  const changeOrientation = document.getElementById("change_orientation");
+  const preview = document.getElementById("preview");
+
+  // Ensure elements exist
+  if (!editorBox || !previewBox || !changeOrientation || !preview) {
+    console.error("One or more elements are missing in the DOM.");
+    return;
+  }
+
+  // Function to toggle the orientation and hide/show preview
+  const toggleOrientation = () => {
+    const isExpanded = editorBox.classList.contains("col-lg-12");
+
+    // Toggle column classes
+    editorBox.classList.toggle("col-lg-6", isExpanded);
+    editorBox.classList.toggle("col-lg-12", !isExpanded);
+    previewBox.classList.toggle("col-lg-6", isExpanded);
+    previewBox.classList.toggle("col-lg-12", !isExpanded);
+
+    // Show/hide the preview div based on orientation
+    preview.style.display = isExpanded ? "flex" : "none";
+  };
+
+  // Function to check screen size and hide preview if necessary
+  const checkScreenSize = () => {
+    if (window.innerWidth <= 991) {
+      preview.style.display = "none"; // Hide preview for smaller screens
+    } else if (!editorBox.classList.contains("col-lg-12")) {
+      preview.style.display = "flex"; // Show preview if screen is larger and orientation allows
+    }
+  };
+
+  // Add event listeners
+  changeOrientation.addEventListener("click", toggleOrientation);
+  window.addEventListener("resize", checkScreenSize);
+
+  // Initial check on page load
+  checkScreenSize();
+  });
+</script>

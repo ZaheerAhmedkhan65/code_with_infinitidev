@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  resources :code_snippets, only: [ :new, :create, :edit, :update ] do
+    member do
+      get :preview
+    end
+  end
+
   resources :courses do
-    resources :lessons, only: [ :new, :create, :show ] do
+    resources :lessons, only: [ :new, :create, :show, :edit, :update, :destroy ] do
       resources :comments, only: [ :create, :edit, :update, :destroy ], defaults: { commentable: "Lesson" }
     end
-    resources :assignments, only: [ :index, :show, :new, :create ] do
+    resources :assignments, only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
       resources :comments, only: [ :create, :edit, :update, :destroy ], defaults: { commentable: "Assignment" }
       resources :likes, only: [ :create, :destroy ], defaults: { likeable_type: "Assignment" }
     end
@@ -13,10 +19,7 @@ Rails.application.routes.draw do
 
   post "courses/:id/join", to: "courses#join", as: :join_course
 
-
-  # namespace :admin do
-  #   # post "users/:id", to: "admin#delete_user", as: :destroy_user
-  # end
+  # Admin routes
   get "admin/dashboard" => "admin#dashboard"
   get "admin/index" => "admin#index"
 
@@ -26,19 +29,14 @@ Rails.application.routes.draw do
     end
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Define health check route
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/*
+  # PWA routes
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # Defines the root path route ("/")
-  # root "posts#index"
-
+  # Static pages routes
   root "static_pages#home"
   get "about" => "static_pages#about"
   get "faq" => "static_pages#faq"

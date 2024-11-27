@@ -9,7 +9,9 @@
           <thead>
             <tr>
               <th>Name</th>
+              <th>Photo</th>
               <th>Email</th>
+              <th>Joined Courses</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -17,7 +19,15 @@
             <% @students.each do |student| %>
               <tr>
                 <td><%= student.username %></td>
+                <td class="text-center"><%= image_tag student.avatar , width: 70 , height: 70 , class:'rounded-circle' %></td>
                 <td><%= student.email %></td>
+                <td>
+                  <ul>
+                    <% student.courses.each do |course| %>
+                      <li><%= course.title %></li>
+                    <% end %>
+                  </ul>
+                </td>
                 <td>
                   <%= link_to "Show", student %>
                 </td>

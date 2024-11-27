@@ -1,10 +1,6 @@
 <h2>Edit Comment</h2>
-
-<%= form_with(model: [@commentable.course, @commentable, @comment], local: true) do |form| %>
-  <div class="form-group">
-    <%= form.text_area :content, value: @comment.content, rows: 3, class: "form-control" %>
-  </div>
-  <div class="form-group mt-2">
-    <%= form.submit "Update Comment", class: "btn btn-primary" %>
+<%= turbo_frame_tag dom_id(@comment) do %>
+  <div class="mb-3 mt-1">
+    <%= render 'comments/form' ,commentable: @commentable %>
   </div>
 <% end %>

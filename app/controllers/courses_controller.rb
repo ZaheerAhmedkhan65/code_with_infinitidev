@@ -1,11 +1,7 @@
 class CoursesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy, :join ]
   before_action :set_course, only: [ :show, :edit, :update, :destroy ]
   before_action :authorize_admin!, only: [ :new, :create, :edit,  :update, :destroy ]
-
-  def index
-    @courses = Course.all
-  end
 
   def show
     @lessons = @course.lessons
@@ -26,7 +22,7 @@ class CoursesController < ApplicationController
   end
 
   def edit
-    render :new
+    render :edit
   end
 
   def update
@@ -58,7 +54,7 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:title, :description, :fee)
+    params.require(:course).permit(:title, :description, :fee, :example_code, :code_language)
   end
 
   def authorize_admin!

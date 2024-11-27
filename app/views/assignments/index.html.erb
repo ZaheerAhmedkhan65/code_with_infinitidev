@@ -8,7 +8,7 @@
         <h3 class=""><%= link_to assignment.title, course_assignment_path(@course, assignment) ,class:'text-decoration-none fs-1 fw-bold text-secondary' %></h3>
         <p><%= assignment.description %></p>
       <% end %>
-      <%= link_to 'New Assignment', new_course_assignment_path(@course), class: 'btn btn-success' if current_user.admin? %>
     </div>
   </div>
-</div>
+</div> 
+

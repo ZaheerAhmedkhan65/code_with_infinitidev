@@ -41,3 +41,45 @@
     width: 100%;
     overflow-x: hidden;
 }
+/* for the textarea in code_snippet form */
+#code-input:focus {
+    outline: none;
+  }
+.outline-none:focus {
+    outline: none;
+    border-bottom: 3px solid black;
+    animation: line 0.3s ease-in-out;
+}  
+
+@keyframes line {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+.textarea {
+    padding: 25px 10px 0px;
+    height: auto; /* Ensure the height is not too tall */
+    line-height: 0.9; /* Adjust line height for better spacing */
+  }
+  .textarea {
+    resize: none;
+  }
+  
+  /* Remove the default resize handle icon */
+  .textarea::-webkit-resizer {
+    display: none;
+  }
+  
+  /* For Firefox users */
+  .textarea {
+    -moz-user-select: none;
+  }
+  
+  #editor_box,
+  #preview_box {
+    transition: all 0.5s ease;
+  }

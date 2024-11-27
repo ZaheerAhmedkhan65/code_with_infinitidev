@@ -2,14 +2,15 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [ :show ]
   before_action :set_user, only: [ :change_role, :destroy ]
 
-
   def index
-    @students = User.students # only users with the role of "student"
+    @students = User.students
+    @code_snippet = CodeSnippet.first
   end
 
   def show
     @user = User.find(params[:id])
     @assignments = @user.assignments
+    @code_snippet = CodeSnippet.first
   end
 
   def destroy

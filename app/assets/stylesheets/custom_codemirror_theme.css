@@ -1,0 +1,58 @@
+/* Custom theme for CodeMirror */
+.CodeMirror {
+    background-color: #1e1e1e !important; /* Dark background */
+    color: #dcdcdc !important; /* Default text color */
+  }
+  
+  .CodeMirror .cm-keyword {
+    color: #ff6347 !important; /* Tomato color for keywords */
+  }
+  
+  .CodeMirror .cm-variable {
+    color: #32cd32 !important; /* Lime green color for variables */
+  }
+  
+  .CodeMirror .cm-variable-2 {
+    color: #ff1493 !important; /* Deep pink color for variables */
+  }
+  
+  .CodeMirror .cm-type {
+    color: #8a2be2 !important; /* Blue violet color for types (classes) */
+  }
+  
+  .CodeMirror .cm-property {
+    color: #7fff00 !important; /* Chartreuse color for properties */
+  }
+  
+  .CodeMirror .cm-string {
+    color: #f4a300 !important; /* Gold color for strings */
+  }
+  
+  .CodeMirror .cm-atom {
+    color: #8b0000 !important; /* Dark red color for atoms */
+  }
+  
+  .CodeMirror .cm-comment {
+    color: #808080 !important; /* Gray color for comments */
+  }
+  
+  .CodeMirror .cm-operator {
+    color: #ff69b4 !important; /* Hot pink color for operators */
+  }
+  
+  .CodeMirror .cm-tag {
+    color: #7c4dff !important; /* Purple color for HTML tags */
+  }
+  /* Customizing the cursor in CodeMirror */
+.CodeMirror .CodeMirror-cursor {
+    border-left: 2px solid #ff6347 !important; /* Change cursor color to Tomato */
+    background-color: transparent !important; /* Transparent background to make cursor visible */
+    width: 2px; /* Change the width of the cursor */
+}
+
+/* Change cursor to a block (like a traditional block cursor) */
+.CodeMirror .CodeMirror-cursor {
+    border-left: none !important;
+    background-color: #ff6347 !important; /* Set cursor color to Tomato */
+    width: 10px; /* Set block cursor width */
+}
