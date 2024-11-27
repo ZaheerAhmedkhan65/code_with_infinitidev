@@ -20,8 +20,19 @@ class LikesController < ApplicationController
   private
 
   def find_likeable
-    klass = params[:likeable_type].constantize
+    klass = safe_constantize(params[:likeable_type])
     @likeable = klass.find(params[:assignment_id] || params[:likeable_id])
+  end
+
+  def safe_constantize(class_name)
+    # Define a list of allowed class names
+    allowed_classes = [ "Assignment", "Lesson" ]  # Add any classes you want to allow here
+
+    if allowed_classes.include?(class_name)
+      class_name.constantize
+    else
+      raise "Unsafe likeable type"
+    end
   end
 
   def like_type_text(like_type)
