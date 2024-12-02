@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="card border-0">
+    <div class="card-title text-center my-3 bg-secondary-subtle py-3">
+      <h1>Help Requests</h1>
+    </div>
+    <% if current_user.admin? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Submitted by</th>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Reply</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @help_requests.each do |request| %>
+            <tr>
+              <td><%= request.user.username %></td>
+              <td><%= request.title %></td>
+              <td><%= request.message %></td>
+              <td><%= request.reply || "No reply yet" %></td>
+              <td>
+                <%= link_to 'Reply', edit_help_request_path(request), class:'btn btn-primary btn-sm fw-bold' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="mt-2 mb-4">
+        <div class="text-end mb-2">
+          <%= link_to "new request", new_help_request_path, class:'btn btn-primary fw-bold'%>
+        </div>
+        <% @help_requests.each do |request| %>
+          <div class="border border-rounded my-2 bg-secondary-subtle">
+            <div class="mx-2 pt-2 px-2 d-flex justify-content-between align-items-center">
+              <strong><%= request.title %></strong>
+              <%= button_to 'Delete', help_request_path(request), method: :delete, data: { turbo_confirm: 'Are you sure to delete ?' }, class:'btn btn-danger btn-sm fw-bold' %>
+            </div>
+            <div class="mx-2 pb-2 px-2 pt-1 border-dark border-bottom mb-2"><%= request.message %></div>
+            <div class="mx-2 p-2 border border-success rounded bg-success-subtle mb-2">
+              <strong class="text-success">Admin's Reply</strong> <br> 
+              <%= request.reply || "No reply yet" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

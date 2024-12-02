@@ -16,6 +16,16 @@
             <%= f.label :avatar , "Image", class:'form-label fw-bold' %>
             <%= f.file_field :avatar , class:'form-control'   %>
           </div>
+
+          <div class="form-group mb-2">
+            <%= f.label :repository_link , class:'form-label fw-bold' %>
+            <%= f.text_field :repository_link, class: 'form-control' %>
+          </div>
+          
+          <div class="form-group mb-2">
+            <%= f.label :page_link , class:'form-label fw-bold' %>
+            <%= f.text_field :page_link, class: 'form-control' %>
+          </div>
           
           <div class="form-group mb-2">
             <%= f.label :email , class:'form-label fw-bold' %><br />

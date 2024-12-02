@@ -5,7 +5,6 @@
       <p class="fs-5 text-white fw-bold pb-5">code with infinitidev</p>
     </div>
   </div>
-  
   <% @courses.each do |course|%>
     <div class="<%= course.title == 'HTML' ? 'bg-primary-subtle' : course.title == 'CSS' ? 'bg-warning-subtle' : course.title == 'JavaScript' ? 'bg-danger-subtle' : '' %>">
       <div class="container">

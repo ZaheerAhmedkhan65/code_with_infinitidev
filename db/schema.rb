@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_25_112751) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_02_203853) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -91,6 +91,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_112751) do
     t.string "code_language"
   end
 
+  create_table "help_requests", force: :cascade do |t|
+    t.string "title"
+    t.text "message"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "reply"
+    t.index ["user_id"], name: "index_help_requests_on_user_id"
+  end
+
   create_table "lessons", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -122,6 +132,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_112751) do
     t.datetime "updated_at", null: false
     t.string "username"
     t.integer "role", default: 0
+    t.string "repository_link"
+    t.string "page_link"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -132,6 +144,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_112751) do
   add_foreign_key "assignments", "users"
   add_foreign_key "code_snippets", "courses"
   add_foreign_key "comments", "users"
+  add_foreign_key "help_requests", "users"
   add_foreign_key "lessons", "courses"
   add_foreign_key "likes", "users"
 end

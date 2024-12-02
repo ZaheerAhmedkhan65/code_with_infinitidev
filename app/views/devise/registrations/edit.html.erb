@@ -14,18 +14,30 @@
             <%= f.label :username , class:'form-label fw-bold'%>
             <%= f.text_field :username, required: true , class:'form-control'%>
           </div>
-                  <div class="form-group mb-2">
+
+          <div class="form-group mb-2">
             <%= f.label :avatar , class:'form-label fw-bold' %>
             <%= f.file_field :avatar , class:'form-control' %>
           </div>
-                  <div class="form-group mb-2">
+
+          <div class="form-group mb-2">
+            <%= f.label :repository_link , class:'form-label fw-bold' %>
+            <%= f.text_field :repository_link, class: 'form-control' %>
+          </div>
+
+          <div class="form-group mb-2">
+            <%= f.label :page_link , class:'form-label fw-bold' %>
+            <%= f.text_field :page_link, class: 'form-control' %>
+          </div>
+          
+          <div class="form-group mb-2">
             <%= f.label :email , class:'form-label fw-bold' %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email" , class:'form-control' %>
           </div>
-                  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
           <% end %>
-                  <div class="form-group mb-2">
+          <div class="form-group mb-2">
             <%= f.label :password , class:'form-label fw-bold' %> <i>(leave blank if you don't want to change it)</i>
             <%= f.password_field :password, autocomplete: "new-password" , class:'form-control' %>
             <% if @minimum_password_length %>
@@ -33,15 +45,15 @@
               <em><%= @minimum_password_length %> characters minimum</em>
             <% end %>
           </div>
-                  <div class="form-group mb-2">
+          <div class="form-group mb-2">
             <%= f.label :password_confirmation , class:'form-label fw-bold' %>
             <%= f.password_field :password_confirmation, autocomplete: "new-password" , class:'form-control' %>
           </div>
-                  <div class="form-group mb-2">
+          <div class="form-group mb-2">
             <%= f.label :current_password , class:'form-label fw-bold'%> <i>(we need your current password to confirm your changes)</i>
             <%= f.password_field :current_password, autocomplete: "current-password" , class:'form-control'%>
           </div>
-                  <div class="actions my-3">
+          <div class="actions my-3">
             <%= f.submit "Update" , class:'btn btn-primary w-100 fw-bold' %>
           </div>
         <% end %>

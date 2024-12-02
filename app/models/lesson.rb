@@ -7,14 +7,15 @@ class Lesson < ApplicationRecord
 
   # default_scope { order(lesson_date: :asc) }
 
-  has_many :comments
-  has_many :likes
+  has_many :comments, as: :commentable, dependent: :destroy
 
-  def comments
-    Comment.where(commentable: self)
-  end
+  has_many :likes, as: :likeable, dependent: :destroy
 
-  def likes
-    Like.where(likeable: self)
-  end
+  # def comments
+  #   Comment.where(commentable: self)
+  # end
+
+  # def likes
+  #   Like.where(likeable: self)
+  # end
 end

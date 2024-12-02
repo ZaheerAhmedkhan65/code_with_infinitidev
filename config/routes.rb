@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :help_requests
   devise_for :users
 
   resources :code_snippets, only: [ :new, :create, :edit, :update ] do
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
   resources :courses do
     resources :lessons, only: [ :new, :create, :show, :edit, :update, :destroy ] do
       resources :comments, only: [ :create, :edit, :update, :destroy ], defaults: { commentable: "Lesson" }
+      resources :likes, only: [ :create, :destroy ], defaults: { likeable_type: "Lesson" }
     end
     resources :assignments, only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
       resources :comments, only: [ :create, :edit, :update, :destroy ], defaults: { commentable: "Assignment" }
